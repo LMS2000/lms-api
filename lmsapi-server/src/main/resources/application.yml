@@ -1,0 +1,72 @@
+server:
+  port: 9000
+  servlet:
+    multipart:
+      max-file-size: 1024MB
+      max-request-size: 1024MB
+    context-path: /lmsapi
+#自设计的工具库starter,enableGlobalResponse开启全局响应，enablePage开启分页配置
+lms:
+  global:
+    enableRedis: true
+
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/lmsapi?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+  session:
+    timeout: 86400
+    store-type: redis
+  redis:
+    port: 6379
+    host: xxxxxx
+    database: 0
+    password: xxxx
+  mail:
+    host: smtp.qq.com
+    port: 465
+    username: xxxxxx
+    password: xxxxxx
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          socketFactory:
+            class: javax.net.ssl.SSLSocketFactory
+        debug: true
+#开启swagger配置
+swagger:
+  open: true
+  scanPackage: com.lms.lmsapi
+  title: lmsapi-server
+  version: 1.0.0
+  description: lmsapi开放平台
+lmsapi:
+  client:
+    access-key: lmsapi
+    secret-key: abcdefgh
+# 文件存储的路径
+oss:
+  #root-path: C:\Users\zdh\Desktop\test  具体存储的文件路径
+  root-path: E:\question_sys\question_file_home
+  #endpoint: http://119.91.143.140:20001  后端的地址
+  endpoint: http://localhost:9000/lmsapi
+
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+dubbo:
+  application:
+    name: dubbo-springboot-demo-provider
+  protocol:
+    name: dubbo
+    port: -1
+  registry:
+    id: nacos-registry
+    address: nacos://localhost:8848

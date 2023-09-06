@@ -1,0 +1,9 @@
+server:
+  port: 8123
+  servlet:
+    context-path: /myapi
+oss:
+  #root-path: C:\Users\zdh\Desktop\test
+  root-path: E:\demo\pan_file_home
+  #endpoint: http://119.91.143.140:20001
+  endpoint: http://localhost:8123/myapi

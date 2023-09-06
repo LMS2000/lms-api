@@ -1,0 +1,6 @@
+# Project exclude paths
+/lmsapi-client-sdk/target/
+/lmsapi-common/target/
+/lmsapi-gateway/target/
+/lmsapi-myInterfaces/target/
+/lmsapi-server/target/
