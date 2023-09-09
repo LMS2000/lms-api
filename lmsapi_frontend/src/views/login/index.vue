@@ -36,7 +36,7 @@
 
 
 			<div class="logoContainer">
-				<div class="logo"><!-- <img src="~assets/img/logo.png" alt="" /> --></div>
+				<div class="logo"><img src="../../assets/logo/logo.png" alt="" /></div>
 				<div class="name">LMSAPI开放平台</div>
 			</div>
 			<div class="mainBox" :class="activeName == 'first' ? '' : 'mainBoxRegistered'">
@@ -295,7 +295,7 @@
 					if (valid) {
 						sendEmail(this.sendEmailInfo).then(res => {
 							if (res.code = 20000) {
-								this.$message.sucess("验证码发送成功!");
+							  this.$message.success("校验码已发送到"+this.sendEmailInfo.email);
 								this.closeSendEmail()
 							} else {
 								this.changeCheckCode(1)
@@ -339,6 +339,8 @@
 
 			      }else{
 			         this.$modal.msgError("登录失败，账号或者密码错误");
+               this.loginInfo.code=''
+               this.changeCheckCode(0)
 			          this.loading = false;
 			      }
 			    })
@@ -441,7 +443,7 @@
 	}
 
 	.name {
-		color: #25262b;
+		color: #2a5aa7;
 		font-size: 20px;
 		letter-spacing: 4px;
 		font-weight: bold;

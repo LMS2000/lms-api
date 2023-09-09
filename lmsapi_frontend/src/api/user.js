@@ -86,3 +86,16 @@ export function setAvatar(data) {
 		data
   })
 }
+export function changeAkAndSk(code) {
+  return request({
+    url: `${api_name}/changeAkSk/${code}`,
+    method: 'post'
+  })
+}
+export function sendEmail(data) {
+  return request({
+    url: `${api_name}/sendEmailCode`,
+    method: 'post',
+		data
+  })
+}

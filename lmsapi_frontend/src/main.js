@@ -30,7 +30,9 @@ import { download } from '@/utils/request'
  * please remove it before going online ! ! !
  */
 import modal from '@/plugins/modal'
+import VueClipboard from 'vue-clipboard2'
 
+Vue.use(VueClipboard)
 Vue.prototype.$modal = modal
 if (process.env.NODE_ENV === 'production') {
   const { mockXHR } = require('../mock')

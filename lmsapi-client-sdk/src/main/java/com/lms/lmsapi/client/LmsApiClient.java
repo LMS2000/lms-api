@@ -6,6 +6,7 @@ import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.http.MultipartOutputStream;
 import cn.hutool.json.JSONUtil;
+import cn.hutool.jwt.JWT;
 import org.springframework.web.multipart.MultipartFile;
 
 
@@ -26,7 +27,6 @@ public class LmsApiClient {
     private static final String GATEWAY_HOST = "http://localhost:8090";
 
     private String accessKey;
-
     private String secretKey;
 
     public LmsApiClient(String accessKey, String secretKey) {

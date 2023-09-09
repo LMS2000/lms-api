@@ -70,7 +70,7 @@
           </el-table-column>
           <el-table-column label="状态" align="center" key="status">
             <template slot-scope="scope">
-              <el-switch v-model="scope.row.status" :active-value="0" :inactive-value="1"
+              <el-switch v-model="scope.row.status" :active-value="1" :inactive-value="0"
                 @input="handleStatusChange(scope.row)"></el-switch>
             </template>
           </el-table-column>
@@ -125,10 +125,10 @@
             <el-form-item label="状态">
               <el-radio-group v-model="form.status">
                 <el-radio :key="0" :label="0">
-                  上线
+                  关闭
                 </el-radio>
                 <el-radio :key="1" :label="1">
-                  关闭
+                  上线
                 </el-radio>
               </el-radio-group>
             </el-form-item>

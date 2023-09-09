@@ -48,7 +48,7 @@
 
     <div class="card">
       <div class="card-title">调用结果</div>
-      <div class="card-item" >
+      <div class="card-item">
         <el-input type="textarea" disabled v-model="resultData"></el-input>
       </div>
     </div>
@@ -59,7 +59,8 @@
 
 <script>
   import {
-    getInterfaceById,invoketestRequest
+    getInterfaceById,
+    invoketestRequest
   } from '../../api/interfaceInfo.js'
 
   export default {
@@ -92,9 +93,9 @@
         total: 0,
         // 接口信息
         interfaceInfo: null,
-        invokeData:{
-          id:'',
-          requestParams:''
+        invokeData: {
+          id: '',
+          requestParams: ''
         },
         // 弹出层标题
         title: "",
@@ -102,7 +103,7 @@
         open: false,
         //最大用户使用配额
         maxQuota: undefined,
-        resultData:'',
+        resultData: '',
         // 表单参数
         form: {},
         defaultProps: {
@@ -113,7 +114,7 @@
     },
     created() {
       const id = this.$route.params && this.$route.params.id;
-         this.invokeData.id=id;
+      this.invokeData.id = id;
       this.getList(id);
     },
     methods: {
@@ -134,22 +135,15 @@
         })
       },
 
-      handleInvoke(){
+      handleInvoke() {
 
-             invoketestRequest(this.invokeData).then(res=>{
-               if(res.code==20000){
-                   this.resultData=res.data;
-               }
-             })
+        invoketestRequest(this.invokeData).then(res => {
+          if (res.code == 20000) {
+            this.resultData = res.data;
+          }
+        })
       }
-
-
-
-
     }
-
-
-
   }
 </script>
 
@@ -177,10 +171,12 @@
     margin-bottom: 15px;
 
   }
+
   .card-item label {
     font-weight: normal;
     margin-right: 5px;
   }
+
   .card-item label::after {
     content: '\00a0\00a0\00a0';
     /* Unicode 编码中的空格字符 */

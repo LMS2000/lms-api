@@ -28,10 +28,12 @@ public class UserVo implements Serializable {
 
     private String userRole;
 
-
+    private String accessKey;
+    private String secretKey;
     private  Integer enable;
 
     private String remark;
+
 
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")

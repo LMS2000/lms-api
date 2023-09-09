@@ -62,18 +62,33 @@ public class UserController {
         }
     }
 
+    @PostMapping("/changeAkSk/{code}")
+    @ApiOperation("刷新用户的公钥和私钥")
+    public Boolean  changeAkAndSk(HttpServletRequest request,@PathVariable("code") String emailcode){
+        HttpSession session = request.getSession();
+    LoginUserVo loginUser = userService.getLoginUser(request);
+        try{
+            String code = (String) session.getAttribute(UserConstants.EMAIIL_HEADER);
+            BusinessException.throwIf(StringUtils.isEmpty(code)||!code.equals(emailcode),
+                    HttpCode.PARAMS_ERROR,"邮箱验证码错误");
+          return userService.changeAkAndSk(loginUser.getUid(),loginUser.getUsername());
+        }finally {
+            session.removeAttribute(UserConstants.EMAIIL_HEADER);
+        }
+    }
+
 
     @PostMapping("/register")
     @ApiOperation("用户注册")
     public Boolean  userRegister(HttpSession session, @Validated @RequestBody RegisterUserDto registerUserDto){
 
         try{
-            String code = (String) session.getAttribute(UserConstants.CHECK_CODE_KEY_EMAIL);
+            String code = (String) session.getAttribute(UserConstants.EMAIIL_HEADER);
             BusinessException.throwIf(StringUtils.isEmpty(code)||!code.equals(registerUserDto.getEmailCode()),
                     HttpCode.PARAMS_ERROR,"邮箱验证码错误");
             return userService.registerUser(registerUserDto);
         }finally {
-              session.removeAttribute(UserConstants.CHECK_CODE_KEY_EMAIL);
+              session.removeAttribute(UserConstants.EMAIIL_HEADER);
         }
     }
 
@@ -112,7 +127,7 @@ public class UserController {
                 throw new BusinessException(HttpCode.PARAMS_ERROR,"图片验证码不正确");
             }
             String emailCode = userService.sendEmail(email, type);
-            session.setAttribute(UserConstants.EMAIIL_HEADER+type,emailCode);
+            session.setAttribute(UserConstants.EMAIIL_HEADER,emailCode);
             return true;
         } finally {
             session.removeAttribute(UserConstants.CHECK_CODE_KEY_EMAIL);
@@ -194,8 +209,18 @@ public class UserController {
     @PostMapping("/resetPassword")
     @ApiOperation("修改密码")
     public Boolean resetPassword(@RequestBody ResetPasswordDto resetPasswordDto, HttpServletRequest request) {
-        Long uid = userService.getLoginUser(request).getUid();
-        return  userService.resetPassword(resetPasswordDto, uid);
+        HttpSession session = request.getSession();
+        try{
+            String code = (String) session.getAttribute(UserConstants.EMAIIL_HEADER);
+            BusinessException.throwIf(StringUtils.isEmpty(code)||!code.equals(resetPasswordDto.getEmailCode()),
+                    HttpCode.PARAMS_ERROR,"邮箱验证码错误");
+            Long uid = userService.getLoginUser(request).getUid();
+            return  userService.resetPassword(resetPasswordDto, uid);
+        }finally {
+            session.removeAttribute(UserConstants.EMAIIL_HEADER);
+        }
+
+
     }
 
     /**

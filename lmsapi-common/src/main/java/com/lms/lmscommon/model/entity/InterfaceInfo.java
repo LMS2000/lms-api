@@ -53,10 +53,6 @@ public class InterfaceInfo implements Serializable {
      * 请求头
      */
     private String requestHeader;
-    /**
-     * 请求类型，0为免费，1为收费
-     */
-    private Integer interfaceType;
 
     /**
      * 响应头

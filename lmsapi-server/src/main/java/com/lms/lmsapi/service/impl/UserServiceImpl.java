@@ -312,6 +312,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         return code;
     }
 
+    @Override
+    public Boolean changeAkAndSk( Long uid,String username) {
+        // 3. 分配 accessKey, secretKey
+        String accessKey = DigestUtil.md5Hex(SALT + username + RandomUtil.randomNumbers(5));
+        String secretKey = DigestUtil.md5Hex(SALT + username + RandomUtil.randomNumbers(8));
+
+       return this.update(new UpdateWrapper<User>().set("access_key",accessKey).set("secret_key",secretKey)
+               .eq("uid",uid));
+    }
+
 
     private void sendEmailCode(String toEmail, String code) {
         try {

@@ -10,15 +10,7 @@
             <el-input v-model="queryParams.name" placeholder="请输入接口名字" clearable style="width: 240px"
               @keyup.enter.native="handleQuery" />
           </el-form-item>
-          <!--  <el-form-item label="手机号码" prop="phonenumber">
-            <el-input
-              v-model="queryParams.phonenumber"
-              placeholder="请输入手机号码"
-              clearable
-              style="width: 240px"
-              @keyup.enter.native="handleQuery"
-            />
-          </el-form-item> -->
+         
           <el-form-item label="状态" prop="method">
             <el-select v-model="queryParams.method" placeholder="请求方法" clearable style="width: 240px">
               <el-option key="0" label="GET" value="0"></el-option>

@@ -22,14 +22,14 @@ spring:
     store-type: redis
   redis:
     port: 6379
-    host: xxxxxx
+    host: xxx
     database: 0
-    password: xxxx
+
   mail:
     host: smtp.qq.com
     port: 465
-    username: xxxxxx
-    password: xxxxxx
+    username: xxxx
+    password: xxxx
     default-encoding: UTF-8
     properties:
       mail:

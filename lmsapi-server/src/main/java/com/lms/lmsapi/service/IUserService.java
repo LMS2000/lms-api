@@ -94,4 +94,6 @@ public interface IUserService extends IService<User> {
     String sendEmail(String email, Integer type);
 
 
+
+    Boolean changeAkAndSk(Long uid,String username);
 }
