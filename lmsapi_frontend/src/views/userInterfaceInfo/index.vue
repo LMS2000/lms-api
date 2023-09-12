@@ -51,12 +51,22 @@
               <el-tag v-else-if="scope.row.interfaceInfoVo.method==3" type="danger">DELETE</el-tag>
             </template>
           </el-table-column>
+          <el-table-column label="调用次数" align="center" prop="name" width="160">
+            <template slot-scope="scope">
+              <span>{{ scope.row.totalNum }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="剩余次数" align="center" prop="name" width="160">
+            <template slot-scope="scope">
+              <span>{{ scope.row.leftNum }}</span>
+            </template>
+          </el-table-column>
           <el-table-column label="状态" align="center" key="status">
-             <template slot-scope="scope">
-               <el-tag v-if="scope.row.status==0" type="success">正常</el-tag>
-               <el-tag v-else-if="scope.row.status==1" type="info">禁用</el-tag>
-             </template>
-           
+            <template slot-scope="scope">
+              <el-tag v-if="scope.row.status==0" type="success">正常</el-tag>
+              <el-tag v-else-if="scope.row.status==1" type="info">禁用</el-tag>
+            </template>
+
           </el-table-column>
 
           <el-table-column label="创建时间" align="center" prop="createTime" width="160">
@@ -66,8 +76,10 @@
           </el-table-column>
           <el-table-column label="操作" align="center" width="160" class-name="small-padding fixed-width">
             <template slot-scope="scope">
-              <el-button size="mini" type="text" icon="el-icon-delete" @click="">调试</el-button>
-              <el-button size="mini" type="text" icon="el-icon-delete" @click="">续期</el-button>
+              <el-button size="mini" type="text" icon="el-icon-delete"
+                @click="handleToInvoke(scope.row.interfaceInfoVo.id)">调试</el-button>
+              <el-button size="mini" type="text" icon="el-icon-delete" @click="handleToRenew(scope.row)">续期
+              </el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -177,6 +189,30 @@
     methods: {
 
 
+      handleToRenew(row) {
+         this.$confirm('确认要续期"' + row.interfaceInfoVo.name   +'"这个接口吗？', '提示', {
+           confirmButtonText: '确定',
+           cancelButtonText: '取消',
+           type: 'info'
+         }).then(() => {
+           // 用户点击了确定按钮，执行操作
+           renewalInterface(row.id).then(res => {
+              if(res.code==20000){
+                  this.$modal.msgSuccess("续期成功");
+              }else{
+                this.$modal.msgError(res.msg);
+              }
+           })
+
+         }).catch(() => {
+           // 用户点击了取消按钮，取消操作
+           this.$modal.msgSuccess(text + "取消操作");
+           // 执行其他操作...
+         });
+      },
+      handleToInvoke(id) {
+        this.$router.push("/mode/test/" + id);
+      },
       //获取接口列表
       getList() {
         this.loading = true;

@@ -10,7 +10,7 @@
             <el-input v-model="queryParams.name" placeholder="请输入接口名字" clearable style="width: 240px"
               @keyup.enter.native="handleQuery" />
           </el-form-item>
-         
+
           <el-form-item label="状态" prop="method">
             <el-select v-model="queryParams.method" placeholder="请求方法" clearable style="width: 240px">
               <el-option key="0" label="GET" value="0"></el-option>
@@ -32,6 +32,8 @@
 
 
           <el-table-column label="接口名字" align="center" key="name" prop="name" :show-overflow-tooltip="true" />
+          <el-table-column label="描述" align="center" key="description" prop="description"
+            :show-overflow-tooltip="true" />
 
           <el-table-column />
           <el-table-column />
@@ -40,7 +42,7 @@
           <el-table-column label="操作" align="center" width="160" class-name="small-padding fixed-width">
             <template slot-scope="scope">
               <el-button size="mini" type="text" icon="el-icon-edit" @click="handleToTry(scope.row)">查看</el-button>
-              <el-button size="mini" type="text" icon="el-icon-delete" @click="">购买</el-button>
+              <el-button size="mini" type="text" icon="el-icon-delete" @click="handleToBuy(scope.row)">购买</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -53,6 +55,7 @@
 
 
 
+
   </div>
 </template>
 
@@ -60,7 +63,9 @@
   import {
     pageOnlineInterfaceInfo,
   } from '../../api/interfaceInfo.js'
-
+  import {
+    addUserInterface
+  } from '../../api/userInterfaceInfo.js'
   export default {
     name: "interfaceInfo",
     data() {
@@ -164,8 +169,30 @@
     },
 
     methods: {
+
+      handleToBuy(row) {
+        this.$confirm('确认要购买"' + row.name   +'"这个接口吗？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'info'
+        }).then(() => {
+          // 用户点击了确定按钮，执行操作
+          addUserInterface(row.id).then(res => {
+             if(res.code==20000){
+                 this.$modal.msgSuccess("购买成功");
+             }else{
+               this.$modal.msgError(res.msg);
+             }
+          })
+
+        }).catch(() => {
+          // 用户点击了取消按钮，取消操作
+          this.$modal.msgSuccess(text + "取消操作");
+          // 执行其他操作...
+        });
+      },
       handleToTry(row) {
-         this.$router.push("/mode/test/" + row.id);
+        this.$router.push("/mode/test/" + row.id);
       },
 
       //获取接口列表

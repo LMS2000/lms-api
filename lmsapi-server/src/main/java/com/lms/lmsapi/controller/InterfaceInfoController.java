@@ -105,6 +105,7 @@ public class InterfaceInfoController {
 
 
     @PostMapping("/invoke")
+    @ApiOperation("调用测试接口")
     public String invokeInterface(@RequestBody InvokeInterfaceDto invokeInterfaceDto,HttpServletRequest request){
         LoginUserVo loginUser = userService.getLoginUser(request);
         return interfaceInfoService.invokeinterface(invokeInterfaceDto,loginUser.getAccessKey(),loginUser.getSecretKey());

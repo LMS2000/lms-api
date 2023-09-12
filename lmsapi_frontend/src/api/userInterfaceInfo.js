@@ -17,3 +17,11 @@ export function renewalInterface(id) {
     method: 'post'
   })
 }
+
+
+export function addUserInterface(id) {
+  return request({
+    url: `${api_name}/add/${id}`,
+    method: 'post'
+  })
+}
